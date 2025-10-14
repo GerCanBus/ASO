@@ -73,9 +73,10 @@ function escanear_red_y_generar_informe() {
         echo "No se puede continuar sin configuración de red."
         return 1
     fi
-    
-    echo "Generando informe de red. Esto puede tomar tiempo..."
-    
+    echo "-------------------------------"
+    echo "Paciencia!! Que esto puede llevar su tiempo..."
+    echo "Vete a hacer la cena y vuelve en un ratito!!"
+    echo "-------------------------------"
     # 1. Preparar el archivo de informe
     {
         echo "--- Informe de la Red Local ---"
