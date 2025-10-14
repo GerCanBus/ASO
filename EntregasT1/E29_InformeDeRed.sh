@@ -74,7 +74,7 @@ function escanear_red_y_generar_informe() {
         return 1
     fi
     
-    echo "Generando informe de red... Paciencia!! Que esto puede tomar su tiempo... \nVete a hacer la cena y vuelve en un ratito!!"
+    echo "Generando informe de red. Esto puede tomar tiempo..."
     
     # 1. Preparar el archivo de informe
     {
