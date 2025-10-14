@@ -1,39 +1,34 @@
 #!/bin/bash
-# Script: InformeDeRed.sh
-# Genera un informe de la red local, incluyendo la información de subred
-# y un escaneo de IPs para determinar cuáles están libres.
+# Script: informe_red.sh
+# Genera un informe de la red local, incluyendo la información de subred,
+# un escaneo de IPs y la indicación del método de cálculo usado.
 
+# --- Variables de Usuario (en minúsculas) ---
 fichero_informe="informe_ip_libres.txt"
 ping_count=1 # Número de pings a enviar para cada IP
 ping_timeout=1 # Tiempo de espera para la respuesta de ping
+calculo_metodo="Fallback" # Variable para rastrear el método usado
 
 # --- Funciones ---
 
-## 🛠️ Obtener Configuración de Red
-# Utiliza 'ip a' y 'ip r' para obtener la configuración de la red local activa.
-
-# Me he dado cuenta que no me funcionase a la primera porque no tenía instalado el paquete (ipcalc) y si el usuario
-# No lo tiene istalado no le va a funcionar. Así que añado la instalación forzosa del paquete.
-
 ## 💾 Comprobar e Instalar ipcalc
 function verificar_e_instalar_ipcalc() {
-    # El comando -v comprueba si el programa existe en el PATH
+    # Comprueba si el comando 'ipcalc' existe en el PATH
     if ! command -v ipcalc &> /dev/null; then
         echo "⚠️ El comando 'ipcalc' no está instalado. Es necesario para precisión en el cálculo de subred."
         echo "Intentando instalar ipcalc (se requerirá 'sudo')..."
         
-        # Intentar instalar ipcalc
+        # Intentar instalar ipcalc (-y para evitar la pregunta de confirmación)
         if sudo apt update && sudo apt install -y ipcalc; then
             echo "✅ 'ipcalc' instalado con éxito."
         else
             echo "❌ Error al instalar 'ipcalc'. El informe de red podría ser incompleto o menos preciso."
-            # El script puede continuar, pero con la limitación mencionada en la función obtener_configuracion_red
         fi
     fi
 }
 
+## 🛠️ Obtener Configuración de Red (Con Fallback)
 function obtener_configuracion_red() {
-    # 1. Obtener la interfaz de red principal y la subred CIDR
     local interfaz=$(ip route | grep default | awk '{print $5}' | head -n 1)
     local cidr=$(ip addr show "$interfaz" | grep 'inet ' | awk '{print $2}')
     
@@ -42,25 +37,24 @@ function obtener_configuracion_red() {
         return 1
     fi
 
-    # 2. Separar IP y máscara CIDR
     local ip_equipo=$(echo "$cidr" | cut -d '/' -f 1)
     local mascara_cidr=$(echo "$cidr" | cut -d '/' -f 2)
 
-    # 3. Calcular la IP de red y la máscara de subred (dotada)
-    # Se usa 'ipcalc' si está disponible, si no, se utiliza 'ip' (más robusto en Ubuntu)
+    # Usa ipcalc si está disponible
     if command -v ipcalc &> /dev/null; then
         local red=$(ipcalc -n "$cidr" | grep Network | awk '{print $2}')
         local broadcast=$(ipcalc -b "$cidr" | grep Broadcast | awk '{print $2}')
         local mascara_subred=$(ipcalc -m "$cidr" | grep Netmask | awk '{print $2}')
+        calculo_metodo="ipcalc" # Actualiza la variable global
     else
-        # Usar el comando 'ip' y cálculos de subred
+        # Lógica de fallback
         local red=$(ip route show dev "$interfaz" | grep proto | awk '{print $1}' | cut -d '/' -f 1)
-        local broadcast="Desconocido (ipcalc no instalado)" # 'ip' no da broadcast directamente
-        local mascara_subred=$(printf '%.0f' $((0xFFFFFFFF << (32 - $mascara_cidr) & 0xFFFFFFFF)) | awk '{print int($1)}' | awk -F '.' ' {printf("%d.%d.%d.%d\n", $1/16777216, $1%16777216/65536, $1%65536/256, $1%256)}')
-        broadcast="N/A (instalar ipcalc para precisión)"
+        local mascara_subred="N/A (instalar ipcalc)"
+        local broadcast="N/A (instalar ipcalc)"
+        calculo_metodo="Fallback" # Mantener la variable global
     fi
     
-    # Exportar variables (en mayúsculas por ser datos del sistema/red)
+    # Exportar variables de red (MAYÚSCULAS)
     export IP_EQUIPO="$ip_equipo"
     export RANGO_CIDR="$cidr"
     export INTERFAZ_RED="$interfaz"
@@ -68,19 +62,19 @@ function obtener_configuracion_red() {
     export MASCARA_SUBRED="$mascara_subred"
     export BROADCAST="$broadcast"
     export MASCARA_CIDR="$mascara_cidr"
+    export CALCULO_METODO="$calculo_metodo" # Exportar el método para el informe
 
     return 0
 }
 
 ## 🔍 Escanear Red y Generar Informe
 function escanear_red_y_generar_informe() {
-    # Verificar que la configuración de red se obtuvo correctamente
     if ! obtener_configuracion_red; then
         echo "No se puede continuar sin configuración de red."
         return 1
     fi
     
-    echo "Generando informe de red. Paciencia!! Esto puede durar varios minutos..."
+    echo "Generando informe de red... Paciencia!! Que esto puede tomar su tiempo... \nVete a hacer la cena y vuelve en un ratito!!"
     
     # 1. Preparar el archivo de informe
     {
@@ -93,13 +87,14 @@ function escanear_red_y_generar_informe() {
         echo "IP de Red:          $IP_RED"
         echo "Máscara de Subred:  $MASCARA_SUBRED (/$MASCARA_CIDR)"
         echo "Broadcast:          $BROADCAST"
+        echo "Método de Cálculo:  **$CALCULO_METODO**" # Línea añadida
         echo "-------------------------------"
         echo "## Listado de IPs y Estado"
         printf "%-18s %s\n" "Dirección IP" "Estado"
         echo "-----------------------------------"
     } > "$fichero_informe"
 
-    # 2. Extraer el prefijo de red para el escaneo (Ej: 192.168.1)
+    # 2. Extraer el prefijo de red para el escaneo (Asume subred /24)
     local prefijo_red=$(echo "$IP_EQUIPO" | cut -d '.' -f 1-3)
 
     # 3. Bucle para escanear de .1 a .254
@@ -108,7 +103,6 @@ function escanear_red_y_generar_informe() {
         local estado="LIBRE"
 
         # Silenciar la salida de ping y comprobar el código de retorno
-        # -c: count (número de paquetes) | -W: timeout (tiempo de espera)
         if ping -c "$ping_count" -W "$ping_timeout" "$ip_a_pingear" &> /dev/null; then
             estado="OCUPADA"
         fi
@@ -119,10 +113,12 @@ function escanear_red_y_generar_informe() {
     echo "-----------------------------------" >> "$fichero_informe"
     echo "✅ Informe completado y guardado en $fichero_informe"
     echo "Pulsa Enter para mostrar el contenido..."
-    read
+    read -r
     cat "$fichero_informe"
 }
 
 # --- Ejecución Principal ---
+
+verificar_e_instalar_ipcalc 
 
 escanear_red_y_generar_informe
