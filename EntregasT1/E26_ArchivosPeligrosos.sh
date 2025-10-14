@@ -1,30 +1,31 @@
 #!/bin/bash
 
-# Defino el nombre del archivo de salida
-ARCHIVO_SALIDA="archivos_peligrosos.txt"
+# --- Configuración de Variables ---
+# Las variables definidas por el usuario están en minúsculas.
+archivo_salida="archivos_peligrosos.txt"
 
 echo "🔎 Buscando archivos modificables por cualquier usuario (permiso 'w' para 'otros')..."
 
-# 1. Limpio el archivo de salida si existe, y si no, lo creo
-> "$ARCHIVO_SALIDA"
+# 1. Limpia el archivo de salida si existe, o lo crea
+# Uso de la redirección > para truncar (vaciar) o crear el archivo.
+> "$archivo_salida"
 
-# 2. Uso 'find' para localizar los archivos
-#    -type f: Busca solo archivos regulares.
-#    -perm /002: Esta es la clave. Busca archivos que tengan al menos
-#                el permiso de escritura (w) habilitado para el grupo "otros" (el último dígito '2').
-#    -print: Imprimo la ruta completa de cada archivo encontrado.
-find . -type f -perm /002 -print >> "$ARCHIVO_SALIDA"
+# 2. Usa 'find' para localizar archivos con permiso de escritura para 'otros' (permiso /002)
+# y guarda la ruta completa en la variable $archivo_salida.
+# Nota: find $PWD busca desde el directorio actual, que es similar a find .
+find . -type f -perm /002 -print >> "$archivo_salida"
 
 # 3. Muestra el resultado
-LINEAS_ENCONTRADAS=$(wc -l < "$ARCHIVO_SALIDA")
+# Almacenamos el recuento de líneas en una variable de usuario en minúsculas.
+lineas_encontradas=$(wc -l < "$archivo_salida")
 
-if [ "$LINEAS_ENCONTRADAS" -gt 0 ]; then
-    echo "✅ Se encontraron $LINEAS_ENCONTRADAS archivos peligrosos."
-    echo "La lista completa con las rutas exactas se ha guardado en: $ARCHIVO_SALIDA"
+if [ "$lineas_encontradas" -gt 0 ]; then
+    echo "✅ Se encontraron $lineas_encontradas archivos peligrosos."
+    echo "La lista completa con las rutas exactas se ha guardado en: $(pwd)/$archivo_salida"
 else
     echo "👍 No se encontraron archivos con permiso de escritura para 'otros' en este directorio."
-    # Opcional: Eliminar el archivo si no se encontró nada para mantener limpio el entorno
-    rm "$ARCHIVO_SALIDA"
+    # Si no hay archivos, eliminamos el archivo de salida para limpiar.
+    rm "$archivo_salida"
 fi
 
 echo "---"
