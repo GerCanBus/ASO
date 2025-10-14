@@ -11,6 +11,27 @@ ping_timeout=1 # Tiempo de espera para la respuesta de ping
 
 ## 🛠️ Obtener Configuración de Red
 # Utiliza 'ip a' y 'ip r' para obtener la configuración de la red local activa.
+
+# Me he dado cuenta que no me funcionase a la primera porque no tenía instalado el paquete (ipcalc) y si el usuario
+# No lo tiene istalado no le va a funcionar. Así que añado la instalación forzosa del paquete.
+
+## 💾 Comprobar e Instalar ipcalc
+function verificar_e_instalar_ipcalc() {
+    # El comando -v comprueba si el programa existe en el PATH
+    if ! command -v ipcalc &> /dev/null; then
+        echo "⚠️ El comando 'ipcalc' no está instalado. Es necesario para precisión en el cálculo de subred."
+        echo "Intentando instalar ipcalc (se requerirá 'sudo')..."
+        
+        # Intentar instalar ipcalc
+        if sudo apt update && sudo apt install -y ipcalc; then
+            echo "✅ 'ipcalc' instalado con éxito."
+        else
+            echo "❌ Error al instalar 'ipcalc'. El informe de red podría ser incompleto o menos preciso."
+            # El script puede continuar, pero con la limitación mencionada en la función obtener_configuracion_red
+        fi
+    fi
+}
+
 function obtener_configuracion_red() {
     # 1. Obtener la interfaz de red principal y la subred CIDR
     local interfaz=$(ip route | grep default | awk '{print $5}' | head -n 1)
