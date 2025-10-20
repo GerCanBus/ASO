@@ -162,7 +162,5 @@ ln -s /ruta/del/Archivo.txt /ruta/del/AccesoDirecto.txt
 
 ls | grep mi_prueba.txt
 
-	## primero hace un listado (ls) y shace una búsqueda (grep) sobre el resultado del ls con lo que
-	## solo me muestra el archivo que coincide con mi_prueba.txt aunque yo le haya pedido un listado completo.
-
-
+        ## primero hace un listado (ls) y shace una búsqueda (grep) sobre el resultado del ls con lo que
+        ## solo me muestra el archivo que coincide con mi_prueba.txt aunque yo le haya pedido un listado completo.
