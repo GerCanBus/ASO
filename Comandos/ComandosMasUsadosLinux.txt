@@ -183,3 +183,26 @@ history | grep "mkdir"
 # COMANDOS DIFF, FILE, WC, HEAD y TAIL #
 #====================================================================================#
 
+### Mostrar solo una cierta parte de un documento (por inicio, final o determinadas lineas)
+
+	## Por lineas de arriba
+
+head -n 3  --> se van a enseñar SOLO las 3 primeras lineas
+
+	## Por lineas de abajo
+
+tail -n3  ->> se van a mostra SOLO las 3 ultimas lineas
+
+	## Mostrar información de un fichero o carpeta o todos los ficheros de dentro de una carpeta (directorio)
+
+file /ruta/del/archivo
+
+	## Mostar diferencias entre dos archivos diferentes (o iguales)
+
+diff /ruta/del/Archivo.txt /ruta/del/ArchivoDuro.txt
+
+	## Word Count --> cuantas líneas, caracteres o bites tiene un archivo
+
+wc /etc/passwd  --> columna 1 con lineas, columna dos son caranteres, columna tres cuánto ocupa y linea 4 el nombre del archivo.
+
+
