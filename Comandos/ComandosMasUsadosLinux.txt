@@ -158,9 +158,24 @@ ln -s /ruta/del/Archivo.txt /ruta/del/AccesoDirecto.txt
 # TUBERÍAS O PIPEAR '|' # (se ejecuta un comando y la salida de ese comando sirve para ejecutar otro comando)
 #====================================================================================#
 
-### Ejemplo:
+    ## Ejemplo1:
 
 ls | grep mi_prueba.txt
 
         ## primero hace un listado (ls) y shace una búsqueda (grep) sobre el resultado del ls con lo que
         ## solo me muestra el archivo que coincide con mi_prueba.txt aunque yo le haya pedido un listado completo.
+
+    ## Ejemplo2:
+
+cat /etc/passwd | grep games
+
+	## De esta forma sólo me va a enseñar las coincidencias con la palabra 'games' y no
+	## toooodo el contenido de passwd que es muy amplio
+
+    ## Ejemplo3:
+
+history | grep "mkdir"
+
+	## Me va a mostrar en la historia de comandos sólo el mkdir
+
+
