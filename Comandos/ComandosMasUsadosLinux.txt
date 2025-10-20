@@ -210,7 +210,7 @@ wc /etc/passwd  --> columna 1 con lineas, columna dos son caranteres, columna tr
 # COMANDOS DU Y DF #
 #====================================================================================#
 
-### sirven para saber cuanto ocupa un archivo o para conocer el espacio libreu ocupado de nuestro disco
+### sirven para saber cuanto ocupa un archivo o para conocer el espacio libre u ocupado de nuestro disco
 
 du -h ~      ->> info tamaño carpeta principal
  
