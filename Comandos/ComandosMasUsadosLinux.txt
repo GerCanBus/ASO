@@ -206,3 +206,17 @@ diff /ruta/del/Archivo.txt /ruta/del/ArchivoDuro.txt
 wc /etc/passwd  --> columna 1 con lineas, columna dos son caranteres, columna tres cuánto ocupa y linea 4 el nombre del archivo.
 
 
+#====================================================================================#
+# COMANDOS DU Y DF #
+#====================================================================================#
+
+### sirven para saber cuanto ocupa un archivo o para conocer el espacio libreu ocupado de nuestro disco
+
+du -h ~      ->> info tamaño carpeta principal
+ 
+du -h /ruta/"carpeta o fichero"/que/quieres/info/de/tamaño
+
+
+df -h --> muestra todos los dicosduros con toda la info de tamaños
+
+
