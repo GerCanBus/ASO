@@ -217,6 +217,6 @@ du -h ~      ->> info tamaño carpeta principal
 du -h /ruta/"carpeta o fichero"/que/quieres/info/de/tamaño
 
 
-df -h --> muestra todos los dicosduros con toda la info de tamaños
+df -h --> muestra todos los dicos duros con toda la info de tamaños
 
 
