@@ -1,4 +1,12 @@
 #!/bin/bash
-# Muestra las primeras 5 líneas con 'error'
+# script9_mejorado.sh: Muestra las primeras 5 líneas con 'error'
 
-sed -n '/error/{x;/./{g;s/.*/&./;};H;g;/.\{5\}$/q;p;}' /var/log/syslog
+# Inicializa un contador en el buffer de espera (hold space)
+sed -n '1{x;s/^/0/;x}
+/error/{
+    p
+    x
+    s/[0-9]*/\0+1/e
+    /5/{q}
+    x
+}' /var/log/syslog
