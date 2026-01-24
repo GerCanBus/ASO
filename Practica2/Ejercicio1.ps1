@@ -8,3 +8,5 @@ Write-Host "Hola $usuario"
 Write-Host "Tu directorio de trabajo es $directorio"
 Write-Host "Perteneces al dominio $dominio"
 Write-Host "Tu equipo se llama $equipo"
+
+Read-Host -Prompt "Presiona Enter para salir"
