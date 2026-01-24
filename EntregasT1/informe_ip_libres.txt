@@ -1,0 +1,117 @@
+--- Informe de la Red Local ---
+Fecha: mar 14 oct 2025 14:47:58 CEST
+Equipo: 10.0.2.15 (Interfaz: enp0s3)
+-------------------------------
+## Configuración de Subred
+Tipo de Red (CIDR): 10.0.2.15/24
+IP de Red:          10.0.2.0/24
+Máscara de Subred:   (/24)
+Broadcast:          10.0.2.255
+Método de Cálculo:  **ipcalc**
+-------------------------------
+## Listado de IPs y Estado
+Dirección IP      Estado
+-----------------------------------
+10.0.2.1           LIBRE
+10.0.2.2           OCUPADA
+10.0.2.3           OCUPADA
+10.0.2.4           OCUPADA
+10.0.2.5           LIBRE
+10.0.2.6           LIBRE
+10.0.2.7           LIBRE
+10.0.2.8           LIBRE
+10.0.2.9           LIBRE
+10.0.2.10          LIBRE
+10.0.2.11          LIBRE
+10.0.2.12          LIBRE
+10.0.2.13          LIBRE
+10.0.2.14          LIBRE
+10.0.2.15          OCUPADA
+10.0.2.16          LIBRE
+10.0.2.17          LIBRE
+10.0.2.18          LIBRE
+10.0.2.19          LIBRE
+10.0.2.20          LIBRE
+10.0.2.21          LIBRE
+10.0.2.22          LIBRE
+10.0.2.23          LIBRE
+10.0.2.24          LIBRE
+10.0.2.25          LIBRE
+10.0.2.26          LIBRE
+10.0.2.27          LIBRE
+10.0.2.28          LIBRE
+10.0.2.29          LIBRE
+10.0.2.30          LIBRE
+10.0.2.31          LIBRE
+10.0.2.32          LIBRE
+10.0.2.33          LIBRE
+10.0.2.34          LIBRE
+10.0.2.35          LIBRE
+10.0.2.36          LIBRE
+10.0.2.37          LIBRE
+10.0.2.38          LIBRE
+10.0.2.39          LIBRE
+10.0.2.40          LIBRE
+10.0.2.41          LIBRE
+10.0.2.42          LIBRE
+10.0.2.43          LIBRE
+10.0.2.44          LIBRE
+10.0.2.45          LIBRE
+10.0.2.46          LIBRE
+10.0.2.47          LIBRE
+10.0.2.48          LIBRE
+10.0.2.49          LIBRE
+10.0.2.50          LIBRE
+10.0.2.51          LIBRE
+10.0.2.52          LIBRE
+10.0.2.53          LIBRE
+10.0.2.54          LIBRE
+10.0.2.55          LIBRE
+10.0.2.56          LIBRE
+10.0.2.57          LIBRE
+10.0.2.58          LIBRE
+10.0.2.59          LIBRE
+10.0.2.60          LIBRE
+10.0.2.61          LIBRE
+10.0.2.62          LIBRE
+10.0.2.63          LIBRE
+10.0.2.64          LIBRE
+10.0.2.65          LIBRE
+10.0.2.66          LIBRE
+10.0.2.67          LIBRE
+10.0.2.68          LIBRE
+10.0.2.69          LIBRE
+10.0.2.70          LIBRE
+10.0.2.71          LIBRE
+10.0.2.72          LIBRE
+10.0.2.73          LIBRE
+10.0.2.74          LIBRE
+10.0.2.75          LIBRE
+10.0.2.76          LIBRE
+10.0.2.77          LIBRE
+10.0.2.78          LIBRE
+10.0.2.79          LIBRE
+10.0.2.80          LIBRE
+10.0.2.81          LIBRE
+10.0.2.82          LIBRE
+10.0.2.83          LIBRE
+10.0.2.84          LIBRE
+10.0.2.85          LIBRE
+10.0.2.86          LIBRE
+10.0.2.87          LIBRE
+10.0.2.88          LIBRE
+10.0.2.89          LIBRE
+10.0.2.90          LIBRE
+10.0.2.91          LIBRE
+10.0.2.92          LIBRE
+10.0.2.93          LIBRE
+10.0.2.94          LIBRE
+10.0.2.95          LIBRE
+10.0.2.96          LIBRE
+10.0.2.97          LIBRE
+10.0.2.98          LIBRE
+10.0.2.99          LIBRE
+10.0.2.100         LIBRE
+10.0.2.101         LIBRE
+10.0.2.102         LIBRE
+10.0.2.103         LIBRE
