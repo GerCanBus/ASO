@@ -30,6 +30,14 @@ switch ($opcion) {
         $resultado = $n1 * $n2
         Write-Host "Resultado de la Multiplicación: $resultado" -ForegroundColor Green 
     }
+    "4" { 
+        if ($n2 -ne 0) {
+            $resultado = $n1 / $n2
+            Write-Host "Resultado de la División: $resultado" -ForegroundColor Green
+        } else {
+            Write-Host "Error: No se puede dividir por cero." -ForegroundColor Red
+        }
+    }
     Default { 
         Write-Host "Opción no válida. Por favor, elige del 1 al 4." -ForegroundColor Yellow 
     }
