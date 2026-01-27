@@ -1,3 +1,0 @@
-Link a github:
-
-https://github.com/GerCanBus/ASO.git
